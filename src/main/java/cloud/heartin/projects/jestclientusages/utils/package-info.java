@@ -1,4 +1,4 @@
 /**
  * Utility classes.
  */
-package cloud.heartin.projects.esjestclientdemo.utils;
+package cloud.heartin.projects.jestclientusages.utils;

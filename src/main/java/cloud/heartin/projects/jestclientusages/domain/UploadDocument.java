@@ -1,4 +1,4 @@
-package cloud.heartin.projects.esjestclientdemo.domain;
+package cloud.heartin.projects.jestclientusages.domain;
 
 import lombok.Builder;
 import lombok.Data;

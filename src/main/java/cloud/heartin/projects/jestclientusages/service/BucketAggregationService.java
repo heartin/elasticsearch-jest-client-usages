@@ -1,6 +1,6 @@
-package cloud.heartin.projects.esjestclientdemo.service;
+package cloud.heartin.projects.jestclientusages.service;
 
-import cloud.heartin.projects.esjestclientdemo.utils.JestDemoUtils;
+import cloud.heartin.projects.jestclientusages.utils.JestDemoUtils;
 import io.searchbox.client.JestClient;
 import io.searchbox.core.SearchResult;
 import org.elasticsearch.search.aggregations.AggregationBuilder;

@@ -1,4 +1,4 @@
-package cloud.heartin.projects.esjestclientdemo.service;
+package cloud.heartin.projects.jestclientusages.service;
 
 import java.io.IOException;
 import java.util.Map;
@@ -9,7 +9,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.junit4.SpringRunner;
 
-import cloud.heartin.projects.esjestclientdemo.AbstractMultiIndexTest;
+import cloud.heartin.projects.jestclientusages.AbstractMultiIndexTest;
 
 import static org.junit.Assert.*;
 

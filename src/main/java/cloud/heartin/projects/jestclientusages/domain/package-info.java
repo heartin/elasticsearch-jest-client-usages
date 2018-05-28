@@ -1,4 +1,4 @@
 /**
  * Domain classes used.
  */
-package cloud.heartin.projects.esjestclientdemo.domain;
+package cloud.heartin.projects.jestclientusages.domain;

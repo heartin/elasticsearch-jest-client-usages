@@ -1,11 +1,11 @@
-package cloud.heartin.projects.esjestclientdemo;
+package cloud.heartin.projects.jestclientusages;
 
 import java.util.HashMap;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
 
-import cloud.heartin.projects.esjestclientdemo.domain.UploadDocument;
+import cloud.heartin.projects.jestclientusages.domain.UploadDocument;
 
 public final class TestData {
 

@@ -1,6 +1,6 @@
-package cloud.heartin.projects.esjestclientdemo;
+package cloud.heartin.projects.jestclientusages;
 
-import cloud.heartin.projects.esjestclientdemo.service.*;
+import cloud.heartin.projects.jestclientusages.service.*;
 
 import org.junit.runner.RunWith;
 import org.junit.runners.Suite;

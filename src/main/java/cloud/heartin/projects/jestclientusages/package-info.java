@@ -1,4 +1,4 @@
 /**
  * Root package.
  */
-package cloud.heartin.projects.esjestclientdemo;
+package cloud.heartin.projects.jestclientusages;

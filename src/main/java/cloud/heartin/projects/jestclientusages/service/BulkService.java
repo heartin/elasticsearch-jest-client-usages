@@ -1,4 +1,4 @@
-package cloud.heartin.projects.esjestclientdemo.service;
+package cloud.heartin.projects.jestclientusages.service;
 
 import java.io.IOException;
 import java.util.List;
@@ -6,7 +6,7 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import cloud.heartin.projects.esjestclientdemo.domain.UploadDocument;
+import cloud.heartin.projects.jestclientusages.domain.UploadDocument;
 import io.searchbox.core.Bulk;
 import io.searchbox.core.BulkResult;
 import io.searchbox.core.Index;

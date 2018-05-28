@@ -1,4 +1,4 @@
-package cloud.heartin.projects.esjestclientdemo;
+package cloud.heartin.projects.jestclientusages;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
@@ -11,9 +11,9 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
         "checkstyle:javadocmethod",
         "checkstyle:finalparameters"})
 @SpringBootApplication
-public class ESJestClientDemoApplication {
+public class JestClientUsagesApplication {
 
 	public static void main(String[] args) {
-		SpringApplication.run(ESJestClientDemoApplication.class, args);
+		SpringApplication.run(JestClientUsagesApplication.class, args);
 	}
 }

@@ -1,4 +1,4 @@
-package cloud.heartin.projects.esjestclientdemo;
+package cloud.heartin.projects.jestclientusages;
 
 import java.io.IOException;
 import java.util.LinkedList;
@@ -8,8 +8,8 @@ import org.junit.After;
 import org.junit.Before;
 import org.springframework.beans.factory.annotation.Autowired;
 
-import cloud.heartin.projects.esjestclientdemo.service.BulkService;
-import cloud.heartin.projects.esjestclientdemo.service.IndexService;
+import cloud.heartin.projects.jestclientusages.service.BulkService;
+import cloud.heartin.projects.jestclientusages.service.IndexService;
 
 import lombok.Getter;
 

@@ -1,4 +1,4 @@
-package cloud.heartin.projects.esjestclientdemo.service;
+package cloud.heartin.projects.jestclientusages.service;
 
 import java.io.IOException;
 

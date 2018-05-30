@@ -11,12 +11,12 @@ Primary objectives of this project are:
 
 ## Usage and setup (Local machine)
 
-Clone simple-starter-build-tools: <br>
-git clone https://github.com/heartin/simple-starter-build-tools.git <br>
+Clone simple-boot-build-tools: <br>
+git clone https://github.com/heartin/simple-boot-build-tools.git <br>
 Run './mvnw clean install' or 'mvn clean install'
 
-Clone simple-starter-parent-java: <br>
-git clone https://github.com/heartin/simple-starter-parent-java.git <br>
+Clone simple-boot-parent-java: <br>
+git clone https://github.com/heartin/simple-boot-parent-java.git <br>
 Run './mvnw clean install' or 'mvn clean install'
 
 ### Configuring and running elasticsearch-jest-client-usages

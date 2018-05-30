@@ -14,7 +14,7 @@
     <!-- TODO: Create an Elasticsearch parent common to all ES clients -->
 	<parent>
 		<groupId>cloud.heartin.projects</groupId>
-		<artifactId>simple-starter-parent-java</artifactId>
+		<artifactId>simple-boot-parent-java</artifactId>
 		<version>0.0.1-SNAPSHOT</version>
 		<relativePath/> <!-- lookup parent from repository -->
 	</parent>

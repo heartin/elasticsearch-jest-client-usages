@@ -1,12 +1,16 @@
 # Elasticsearch Jest Client Usages
 
-This project provides essential usages of various Elasticsearch APIs using the Jest client. 
-This project uses Spring Boot AutoConfiguration (JestAutoConfiguration) for configuring Jest.
-Contributors are welcome to add more usages through pull requests. 
-
 Primary objectives of this project are:
-1. Learn and understand the use of Jest Java library for communicating with Elasticsearch. See and run the test cases to understand more about the usage.
+1. Provides essential usages of various Elasticsearch APIs using the Elasticsearch Jest client.
+1. Learn and understand the use of Elasticsearch Jest Java library. See and run the test cases to understand more about the usage.
 1. Use the test cases within project to test compatibility with any Elasticsearch core version as soon as Elasticsearch is upgraded.
+1. Provide a starter project for my session attendees to get started easily and add / correct code.
+
+Note:
+1. This project uses Spring Boot AutoConfiguration (JestAutoConfiguration.java).
+1. I will include only a very limited number of usages in the initial commit.
+1. Test cases are actually more integration style and not unit style, and do not follow most of the best practices. 
+1. Contributors are welcome to add usages and/or add or correct tests.
 
 
 ## Usage and setup (Local machine)
@@ -18,6 +22,7 @@ Run './mvnw clean install' or 'mvn clean install'
 Clone simple-boot-parent-java: <br>
 git clone https://github.com/heartin/simple-boot-parent-java.git <br>
 Run './mvnw clean install' or 'mvn clean install'
+
 
 ### Configuring and running elasticsearch-jest-client-usages
 

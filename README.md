@@ -30,10 +30,12 @@ Clone this repo (elasticsearch-jest-client-usages): <br>
 git clone https://github.com/heartin/elasticsearch-jest-client-usages.git <br>
 Run './mvnw clean compile' or 'mvn clean compile'
 
-Configure following properties in your application.properties file as required by JestAutoConfiguration in Spring: <br>
-spring.elasticsearch.jest.username <br>
-spring.elasticsearch.jest.password <br>
-spring.elasticsearch.jest.uris <br>
+Project's tests use a Spring profile "test". So configure following properties required 
+by JestAutoConfiguration in a file application-test.properties. This file is added to 
+.gitignore and hence helps accidental checkin of test configuration properties.<br>
+- spring.elasticsearch.jest.username <br>
+- spring.elasticsearch.jest.password <br>
+- spring.elasticsearch.jest.uris <br>
 
 Notes: 
 1. username is your username, password is your password and uris should refer to your endpoint. 

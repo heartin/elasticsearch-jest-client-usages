@@ -1,6 +1,7 @@
 package cloud.heartin.projects.jestclientusages.service;
 
 import java.io.IOException;
+import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -10,6 +11,7 @@ import io.searchbox.client.JestResult;
 import io.searchbox.indices.CreateIndex;
 import io.searchbox.indices.DeleteIndex;
 import io.searchbox.indices.IndicesExists;
+import io.searchbox.indices.Refresh;
 
 /**
  * Index services.
@@ -109,6 +111,29 @@ public class IndexService {
         try {
             result  =  client.execute(
                     new DeleteIndex.Builder(index).build());
+        } catch (IOException io) {
+            return false;
+        }
+
+        if (result.isSucceeded()) {
+            return true;
+        }
+
+        return false;
+    }
+
+    /**
+     * Refresh index.
+     * Currently used for testing purpose to reflect changes immediately.
+     * Bulk API also has a refresh field, but doesn't seem to work good.
+     * @param indexes indexes.
+     * @return true if success.
+     */
+    public final boolean refresh(final List<String> indexes) {
+        JestResult result = null;
+        try {
+            result  =  client.execute(
+                    new Refresh.Builder().addIndices(indexes).build());
         } catch (IOException io) {
             return false;
         }

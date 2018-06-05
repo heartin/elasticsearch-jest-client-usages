@@ -32,15 +32,12 @@ public class AbstractMultiIndexTest {
         indexes = new LinkedList<>();
         indexes.add(INDEX1);
         indexes.add(INDEX2);
-        bulkService.bulkUpload(TestData.generateUploadDocumentList(INDEX1));
-        bulkService.bulkUpload(TestData.generateUploadDocumentList(INDEX2));
+        bulkService.bulkUpload(TestData.generateUploadDocumentList(INDEX1), true);
+        bulkService.bulkUpload(TestData.generateUploadDocumentList(INDEX2), true);
 
-        // Bulk insert may take some time to complete. This is a bad hack.
-        try {
-            Thread.sleep(1000);
-        } catch (InterruptedException e) {
-            e.printStackTrace();
-        }
+        // To reflect changes immediately.
+        // The refresh property of BulkUpload is not guaranteed to help.
+        indexService.refresh(indexes);
     }
 
     @After

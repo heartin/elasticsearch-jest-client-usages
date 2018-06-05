@@ -30,17 +30,24 @@ public class BulkService {
     /**
      * Uploads documents.
      * @param documents documents to upload.
+     * @param refresh true to reflect changes immediate (no guarantees though),
+     * use refresh api instead.
      * @throws IOException not handled, not
      */
     public final void bulkUpload(
-            final List<UploadDocument> documents) throws IOException {
+            final List<UploadDocument> documents,
+            final boolean refresh) throws IOException {
 
         final Bulk.Builder builder = new Bulk.Builder();
 
         documents.forEach(
             d -> {
                 builder.addAction(new Index.Builder(d.getSource())
-                        .index(d.getIndex()).id(d.getId()).type(TYPE).build());
+                        .index(d.getIndex())
+                        .id(d.getId())
+                        .type(TYPE)
+                        .refresh(refresh) // True to reflect changes immediate
+                        .build());
             }
         );
 

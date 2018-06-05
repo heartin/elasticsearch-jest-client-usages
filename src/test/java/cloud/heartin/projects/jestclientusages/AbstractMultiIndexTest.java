@@ -6,6 +6,7 @@ import java.util.List;
 
 import org.junit.After;
 import org.junit.Before;
+import org.junit.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 
 import cloud.heartin.projects.jestclientusages.service.BulkService;
@@ -13,7 +14,7 @@ import cloud.heartin.projects.jestclientusages.service.IndexService;
 
 import lombok.Getter;
 
-public class AbstractMultiIndexTest {
+public class AbstractMultiIndexTest extends AbstractParentTest {
 
     private static final String INDEX1 = "index1";
     private static final String INDEX2 = "index2";
@@ -44,5 +45,10 @@ public class AbstractMultiIndexTest {
     public void cleanup() throws IOException {
         indexService.deleteIndexSilently(INDEX1);
         indexService.deleteIndexSilently(INDEX2);
+    }
+
+    @Test
+    public void test() {
+        // Do nothing - Hack to avoid 'JUnit No runnable methods' error.
     }
 }

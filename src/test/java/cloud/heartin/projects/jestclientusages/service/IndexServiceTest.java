@@ -5,11 +5,11 @@ import java.io.IOException;
 import org.junit.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 
-import cloud.heartin.projects.jestclientusages.AbstractParentTest;
+import cloud.heartin.projects.jestclientusages.TestParent;
 
 import static org.junit.Assert.*;
 
-public class IndexServiceTest extends AbstractParentTest {
+public class IndexServiceTest extends TestParent {
 
     static final String INDEX = "employee";
 

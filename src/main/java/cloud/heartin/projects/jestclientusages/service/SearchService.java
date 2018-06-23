@@ -1,17 +1,16 @@
 package cloud.heartin.projects.jestclientusages.service;
 
-import cloud.heartin.projects.jestclientusages.utils.JestDemoUtils;
-import com.google.gson.JsonArray;
+import java.io.IOException;
+import java.util.List;
 
+import com.google.gson.JsonArray;
 import io.searchbox.client.JestClient;
 import org.elasticsearch.index.query.QueryBuilder;
 import org.elasticsearch.index.query.QueryBuilders;
-import org.elasticsearch.search.builder.SearchSourceBuilder;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import java.io.IOException;
-import java.util.List;
+import cloud.heartin.projects.jestclientusages.utils.JestDemoUtils;
 
 /**
  * Multi Index Search Service.
@@ -43,7 +42,7 @@ public class SearchService {
         final QueryBuilder query = QueryBuilders.matchQuery(key, value);
         return JestDemoUtils
                    .executeSearch(client, indexes,
-                           createSearchSourceBuilder(query, size))
+                           JestDemoUtils.createSearchSourceBuilder(query, size))
                    .getJsonObject()
                    .getAsJsonObject("hits")
                    .getAsJsonArray("hits");
@@ -62,17 +61,10 @@ public class SearchService {
         final QueryBuilder query = QueryBuilders.matchAllQuery();
         return JestDemoUtils
                    .executeSearch(client, indexes,
-                           createSearchSourceBuilder(query, size))
+                           JestDemoUtils.createSearchSourceBuilder(query, size))
                    .getJsonObject()
                    .getAsJsonObject("hits")
                    .getAsJsonArray("hits");
     }
 
-    private SearchSourceBuilder createSearchSourceBuilder(
-            final QueryBuilder query, final int size) {
-        SearchSourceBuilder searchSourceBuilder = new SearchSourceBuilder();
-        searchSourceBuilder.query(query)
-            .size(size);
-        return searchSourceBuilder;
-    }
 }

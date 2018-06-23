@@ -6,14 +6,11 @@ import java.util.Map;
 import org.junit.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 
-import cloud.heartin.projects.jestclientusages.AbstractMultiIndexTest;
+import cloud.heartin.projects.jestclientusages.TestParentWithDataMultiIndex;
 
 import static org.junit.Assert.*;
 
-/*
-Data is setup as mentioned in https://cloudmaterials.com/en/recipe/recipes-elasticsearch-bulk-api-batch-updates-elastic-cloud
- */
-public class BucketAggregationServiceTest extends AbstractMultiIndexTest {
+public class BucketAggregationServiceTest extends TestParentWithDataMultiIndex {
 
     @Autowired
     private BucketAggregationService service;
@@ -22,7 +19,7 @@ public class BucketAggregationServiceTest extends AbstractMultiIndexTest {
     public final void avgAggregationTest() throws IOException {
         Map<String, Long> map =
                 service.termsAggregationBucketCounts(getIndexes(), "age");
-        assertEquals(2, (long) map.get("25"));
+        assertEquals(4, (long) map.get("45"));
     }
 
 }

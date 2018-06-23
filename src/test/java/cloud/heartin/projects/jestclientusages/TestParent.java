@@ -9,7 +9,7 @@ import org.springframework.test.context.junit4.SpringRunner;
 @ActiveProfiles("test")
 @RunWith(SpringRunner.class)
 @SpringBootTest
-public class AbstractParentTest {
+public class TestParent {
 
     @Test
     public void test() {

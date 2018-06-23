@@ -1,6 +1,10 @@
 package cloud.heartin.projects.jestclientusages.service;
 
-import cloud.heartin.projects.jestclientusages.utils.JestDemoUtils;
+import java.io.IOException;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+
 import io.searchbox.client.JestClient;
 import io.searchbox.core.SearchResult;
 import org.elasticsearch.search.aggregations.AggregationBuilder;
@@ -9,10 +13,7 @@ import org.elasticsearch.search.builder.SearchSourceBuilder;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import java.io.IOException;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import cloud.heartin.projects.jestclientusages.utils.JestDemoUtils;
 
 /**
  * Multi Index Bucket Aggregation Service.

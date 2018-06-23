@@ -5,11 +5,11 @@ import java.io.IOException;
 import org.junit.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 
-import cloud.heartin.projects.jestclientusages.AbstractMultiIndexTest;
+import cloud.heartin.projects.jestclientusages.TestParentWithDataMultiIndex;
 
 import static org.junit.Assert.*;
 
-public class MetricAggregationServiceTest extends AbstractMultiIndexTest {
+public class MetricAggregationServiceTest extends TestParentWithDataMultiIndex {
 
     @Autowired
     private MetricAggregationService service;
@@ -17,7 +17,7 @@ public class MetricAggregationServiceTest extends AbstractMultiIndexTest {
     @Test
     public void countAggregationTest() throws IOException {
         double result = service.countAggregation(getIndexes(), "_id");
-        assertEquals(4, result, 0);
+        assertEquals(6, result, 0);
     }
 
 }

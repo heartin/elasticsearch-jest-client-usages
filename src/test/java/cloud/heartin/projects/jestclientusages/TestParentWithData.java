@@ -14,10 +14,7 @@ import cloud.heartin.projects.jestclientusages.service.IndexService;
 
 import lombok.Getter;
 
-public class AbstractMultiIndexTest extends AbstractParentTest {
-
-    private static final String INDEX1 = "index1";
-    private static final String INDEX2 = "index2";
+public class TestParentWithData extends TestParent {
 
     @Getter
     private List<String> indexes;
@@ -31,10 +28,9 @@ public class AbstractMultiIndexTest extends AbstractParentTest {
     @Before
     public void createIndexes() throws IOException {
         indexes = new LinkedList<>();
-        indexes.add(INDEX1);
-        indexes.add(INDEX2);
-        bulkService.bulkUpload(TestData.generateUploadDocumentList(INDEX1), true);
-        bulkService.bulkUpload(TestData.generateUploadDocumentList(INDEX2), true);
+        indexes.add(TestData.EMPLOYEE_INDEX);
+
+        bulkService.bulkUpload(TestData.generateEmployeeData(), true);
 
         // To reflect changes immediately.
         // The refresh property of BulkUpload is not guaranteed to help.
@@ -42,9 +38,8 @@ public class AbstractMultiIndexTest extends AbstractParentTest {
     }
 
     @After
-    public void cleanup() throws IOException {
-        indexService.deleteIndexSilently(INDEX1);
-        indexService.deleteIndexSilently(INDEX2);
+    public void cleanup() {
+        indexService.deleteIndexSilently(TestData.EMPLOYEE_INDEX);
     }
 
     @Test

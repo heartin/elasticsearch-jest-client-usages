@@ -5,8 +5,11 @@ import java.util.List;
 
 import io.searchbox.client.JestClient;
 import io.searchbox.core.SearchResult;
+
+import org.elasticsearch.index.query.QueryBuilder;
 import org.elasticsearch.search.aggregations.AggregationBuilder;
 import org.elasticsearch.search.aggregations.AggregationBuilders;
+import org.elasticsearch.search.aggregations.bucket.filter.FilterAggregationBuilder;
 import org.elasticsearch.search.builder.SearchSourceBuilder;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -50,6 +53,31 @@ public class MetricAggregationService {
         return result.getAggregations()
             .getValueCountAggregation(AGG_NAME)
             .getValueCount();
+    }
+
+    /**
+     * Match Query.
+     * @param indexes - Indexes.
+     * @param field - Field to find Average.
+     * @param filter - Query filter.
+     * @return Average.
+     * @throws IOException not handled, not a great thing.
+     */
+    public final Long countAggregation(final List<String> indexes, final String field,
+            final QueryBuilder filter) throws IOException {
+
+        final AggregationBuilder subAggregation = AggregationBuilders.count(AGG_NAME).field(field);
+
+        final FilterAggregationBuilder aggregation = AggregationBuilders.filter("Filter", filter)
+                .subAggregation(subAggregation);
+
+        final SearchResult result = JestDemoUtils.executeSearch(
+                client, indexes, createSearchSourceBuilder(aggregation));
+
+        return result.getAggregations()
+                .getFilterAggregation("Filter")
+                .getValueCountAggregation(AGG_NAME)
+                .getValueCount();
     }
 
     private SearchSourceBuilder createSearchSourceBuilder(

@@ -56,8 +56,7 @@ public class SearchService {
      * @return JsonObject with result.
      * @throws IOException not handled, not a great thing.
      */
-    public final JsonArray matchAllQuery(
-            final List<String> indexes, final int size) throws IOException {
+    public final JsonArray matchAllQuery(final List<String> indexes, final int size) throws IOException {
         final QueryBuilder query = QueryBuilders.matchAllQuery();
         return JestDemoUtils
                    .executeSearch(client, indexes,

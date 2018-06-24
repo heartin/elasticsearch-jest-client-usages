@@ -33,8 +33,7 @@ public final class JestDemoUtils {
             final List<String> indexes,
             final SearchSourceBuilder searchSource)
             throws IOException {
-        final Search.Builder builder =
-                new Search.Builder(searchSource.toString());
+        final Search.Builder builder = new Search.Builder(searchSource.toString());
         indexes.forEach(
             index -> {
                 builder.addIndex(index);
@@ -43,8 +42,7 @@ public final class JestDemoUtils {
         SearchResult result = client.execute(builder.build());
 
         if (!result.isSucceeded()) {
-            throw new RuntimeException("Search Request Failed:"
-                    + result.getErrorMessage());
+            throw new RuntimeException("Search Request Failed:" + result.getErrorMessage());
         }
 
         return result;
@@ -56,8 +54,7 @@ public final class JestDemoUtils {
      * @param size to limit response items.
      * @return {@link SearchSourceBuilder}
      */
-    public static SearchSourceBuilder createSearchSourceBuilder(
-            final QueryBuilder query, final int size) {
+    public static SearchSourceBuilder createSearchSourceBuilder(final QueryBuilder query, final int size) {
 
         SearchSourceBuilder searchSourceBuilder = new SearchSourceBuilder();
         searchSourceBuilder.query(query).size(size);
@@ -71,11 +68,9 @@ public final class JestDemoUtils {
      * @return JsonString
      * @throws IOException Need to handle.
      */
-    public static String getJsonStringFromQueryBuilder(
-            final QueryBuilder queryBuilder) throws IOException {
+    public static String getJsonStringFromQueryBuilder(final QueryBuilder queryBuilder) throws IOException {
 
-        return queryBuilder.toXContent(XContentFactory.jsonBuilder(),
-                ToXContent.EMPTY_PARAMS).prettyPrint().string();
+        return queryBuilder.toXContent(XContentFactory.jsonBuilder(), ToXContent.EMPTY_PARAMS).prettyPrint().string();
     }
 
 }

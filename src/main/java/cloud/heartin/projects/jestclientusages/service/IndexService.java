@@ -34,12 +34,10 @@ public class IndexService {
      * @throws IOException not handled, not a great thing.
      */
     public final void createIndex(final String index) throws IOException {
-        JestResult result  = client.execute(
-                new CreateIndex.Builder(index).build());
+        JestResult result  = client.execute(new CreateIndex.Builder(index).build());
 
         if (!result.isSucceeded()) {
-            throw new RuntimeException("Create Index Request Failed:"
-                    + result.getErrorMessage());
+            throw new RuntimeException("Create Index Request Failed:" + result.getErrorMessage());
         }
     }
 
@@ -49,12 +47,10 @@ public class IndexService {
      * @throws IOException not handled, not a great thing.
      */
     public final void deleteIndex(final String index) throws IOException {
-        JestResult result  =  client.execute(
-                new DeleteIndex.Builder(index).build());
+        JestResult result  =  client.execute(new DeleteIndex.Builder(index).build());
 
         if (!result.isSucceeded()) {
-            throw new RuntimeException("Delete Index Request Failed:"
-                    + result.getErrorMessage());
+            throw new RuntimeException("Delete Index Request Failed:" + result.getErrorMessage());
         }
     }
 
@@ -65,15 +61,13 @@ public class IndexService {
      * @throws IOException not handled, not a great thing.
      */
     public final boolean checkIndex(final String index) throws IOException {
-        JestResult result  =  client.execute(
-                new IndicesExists.Builder(index).build());
+        JestResult result  =  client.execute(new IndicesExists.Builder(index).build());
 
         if (!result.isSucceeded()) {
             if (result.getResponseCode() == NOT_FOUND) {
                 return false;
             }
-            throw new RuntimeException("IndexExists Request Failed:"
-                    + result.getErrorMessage());
+            throw new RuntimeException("IndexExists Request Failed:" + result.getErrorMessage());
         }
 
         return true;
@@ -88,8 +82,7 @@ public class IndexService {
         JestResult result;
 
         try {
-            result = client.execute(
-                    new CreateIndex.Builder(index).build());
+            result = client.execute(new CreateIndex.Builder(index).build());
         } catch (IOException io) {
             return false;
         }
@@ -109,8 +102,7 @@ public class IndexService {
     public final boolean deleteIndexSilently(final String index) {
         JestResult result = null;
         try {
-            result  =  client.execute(
-                    new DeleteIndex.Builder(index).build());
+            result  =  client.execute(new DeleteIndex.Builder(index).build());
         } catch (IOException io) {
             return false;
         }
@@ -132,8 +124,7 @@ public class IndexService {
     public final boolean refresh(final List<String> indexes) {
         JestResult result = null;
         try {
-            result  =  client.execute(
-                    new Refresh.Builder().addIndices(indexes).build());
+            result  =  client.execute(new Refresh.Builder().addIndices(indexes).build());
         } catch (IOException io) {
             return false;
         }

@@ -51,15 +51,12 @@ public class AliasService {
      */
     public final boolean createAlias(final AliasParams aliasParams) {
         final AddAliasMapping.Builder aliasBuilder =
-                new AddAliasMapping.Builder(
-                        aliasParams.getIndexes(), aliasParams.getAliasName());
+                new AddAliasMapping.Builder(aliasParams.getIndexes(), aliasParams.getAliasName());
 
-        final Optional<String> optionalRouting =
-                Optional.ofNullable(aliasParams.getRouting());
+        final Optional<String> optionalRouting = Optional.ofNullable(aliasParams.getRouting());
         optionalRouting.ifPresent(routing -> aliasBuilder.addRouting(routing));
 
-        final Optional<Map<String, Object>> optionalFilter =
-                Optional.ofNullable(aliasParams.getFilter());
+        final Optional<Map<String, Object>> optionalFilter = Optional.ofNullable(aliasParams.getFilter());
         optionalFilter.ifPresent(filter -> aliasBuilder.setFilter(filter));
 
         final ModifyAliases modifyAliases =
@@ -89,8 +86,7 @@ public class AliasService {
     public final boolean dropAlias(
             final String aliasName, final String indexName) {
         final ModifyAliases modifyAliases = new ModifyAliases.Builder(
-                new RemoveAliasMapping.Builder(indexName, aliasName)
-                .build()).build();
+                new RemoveAliasMapping.Builder(indexName, aliasName).build()).build();
         try {
             final JestResult result = this.client.execute(modifyAliases);
             if (!result.isSucceeded()) {

@@ -37,12 +37,9 @@ public class BucketAggregationService {
      * @return Average.
      * @throws IOException not handled, not a great thing.
      */
-    public final Map<String, Long> termsAggregationBucketCounts(
-            final List<String> indexes, final String field)
+    public final Map<String, Long> termsAggregationBucketCounts(final List<String> indexes, final String field)
             throws IOException {
-        final AggregationBuilder aggregation = AggregationBuilders
-                                                   .terms(TERMS_AGG_NAME)
-                                                   .field(field);
+        final AggregationBuilder aggregation = AggregationBuilders.terms(TERMS_AGG_NAME).field(field);
         final SearchResult result =
             JestDemoUtils.executeSearch(
                 client,
@@ -61,8 +58,7 @@ public class BucketAggregationService {
         return mapKeyToCount;
     }
 
-    private SearchSourceBuilder createSearchSourceBuilder(
-            final AggregationBuilder aggregation) {
+    private SearchSourceBuilder createSearchSourceBuilder(final AggregationBuilder aggregation) {
         SearchSourceBuilder searchSourceBuilder = new SearchSourceBuilder();
         searchSourceBuilder.aggregation(aggregation);
         return searchSourceBuilder;

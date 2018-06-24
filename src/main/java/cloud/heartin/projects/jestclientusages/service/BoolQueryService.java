@@ -43,31 +43,22 @@ public class BoolQueryService {
 
         BoolQueryBuilder boolQueryBuilder = QueryBuilders.boolQuery();
 
-        final Optional<List<QueryBuilder>> filterQueries =
-                Optional.ofNullable(params.getFilterQueries());
-        filterQueries.ifPresent(f -> f.forEach(
-                queryBuilder -> boolQueryBuilder.filter(queryBuilder)));
+        final Optional<List<QueryBuilder>> filterQueries = Optional.ofNullable(params.getFilterQueries());
+        filterQueries.ifPresent(f -> f.forEach(queryBuilder -> boolQueryBuilder.filter(queryBuilder)));
 
-        final Optional<List<QueryBuilder>> mustQueries =
-                Optional.ofNullable(params.getMustQueries());
-        mustQueries.ifPresent(m -> m.forEach(
-                queryBuilder -> boolQueryBuilder.must(queryBuilder)));
+        final Optional<List<QueryBuilder>> mustQueries = Optional.ofNullable(params.getMustQueries());
+        mustQueries.ifPresent(m -> m.forEach(queryBuilder -> boolQueryBuilder.must(queryBuilder)));
 
-        final Optional<List<QueryBuilder>> shouldQueries =
-                Optional.ofNullable(params.getShouldQueries());
-        shouldQueries.ifPresent(s -> s.forEach(
-                queryBuilder -> boolQueryBuilder.should(queryBuilder)));
+        final Optional<List<QueryBuilder>> shouldQueries = Optional.ofNullable(params.getShouldQueries());
+        shouldQueries.ifPresent(s -> s.forEach(queryBuilder -> boolQueryBuilder.should(queryBuilder)));
 
-        final Optional<List<QueryBuilder>> mustNotQueries =
-                Optional.ofNullable(params.getMustNotQueries());
-        mustNotQueries.ifPresent(m -> m.forEach(
-                queryBuilder -> boolQueryBuilder.mustNot(queryBuilder)));
+        final Optional<List<QueryBuilder>> mustNotQueries = Optional.ofNullable(params.getMustNotQueries());
+        mustNotQueries.ifPresent(m -> m.forEach(queryBuilder -> boolQueryBuilder.mustNot(queryBuilder)));
 
         try {
             return JestDemoUtils
                     .executeSearch(client, params.getIndexes(),
-                            JestDemoUtils.createSearchSourceBuilder(
-                                    boolQueryBuilder, size))
+                            JestDemoUtils.createSearchSourceBuilder(boolQueryBuilder, size))
                     .getJsonObject()
                     .getAsJsonObject("hits")
                     .getAsJsonArray("hits");
@@ -91,35 +82,25 @@ public class BoolQueryService {
 
         BoolQueryBuilder subBoolQueryBuilder = QueryBuilders.boolQuery();
 
-        final Optional<List<QueryBuilder>> filterQueries =
-                Optional.ofNullable(params.getFilterQueries());
-        filterQueries.ifPresent(f -> f.forEach(
-                queryBuilder -> subBoolQueryBuilder.filter(queryBuilder)));
+        final Optional<List<QueryBuilder>> filterQueries = Optional.ofNullable(params.getFilterQueries());
+        filterQueries.ifPresent(f -> f.forEach(queryBuilder -> subBoolQueryBuilder.filter(queryBuilder)));
 
-        final Optional<List<QueryBuilder>> mustQueries =
-                Optional.ofNullable(params.getMustQueries());
-        mustQueries.ifPresent(m -> m.forEach(
-                queryBuilder -> subBoolQueryBuilder.must(queryBuilder)));
+        final Optional<List<QueryBuilder>> mustQueries = Optional.ofNullable(params.getMustQueries());
+        mustQueries.ifPresent(m -> m.forEach(queryBuilder -> subBoolQueryBuilder.must(queryBuilder)));
 
-        final Optional<List<QueryBuilder>> shouldQueries =
-                Optional.ofNullable(params.getShouldQueries());
-        shouldQueries.ifPresent(s -> s.forEach(
-                queryBuilder -> subBoolQueryBuilder.should(queryBuilder)));
+        final Optional<List<QueryBuilder>> shouldQueries = Optional.ofNullable(params.getShouldQueries());
+        shouldQueries.ifPresent(s -> s.forEach(queryBuilder -> subBoolQueryBuilder.should(queryBuilder)));
 
-        final Optional<List<QueryBuilder>> mustNotQueries =
-                Optional.ofNullable(params.getMustNotQueries());
-        mustNotQueries.ifPresent(m -> m.forEach(
-                queryBuilder -> subBoolQueryBuilder.mustNot(queryBuilder)));
+        final Optional<List<QueryBuilder>> mustNotQueries = Optional.ofNullable(params.getMustNotQueries());
+        mustNotQueries.ifPresent(m -> m.forEach(queryBuilder -> subBoolQueryBuilder.mustNot(queryBuilder)));
 
         boolQueryBuilder.filter(subBoolQueryBuilder);
 
         // Verifying is we are running bool query within filter context.
         try {
             Assert.isTrue(
-                    JestDemoUtils
-                            .getJsonStringFromQueryBuilder(boolQueryBuilder)
-                            .startsWith("{\"bool\":{\"filter\":[{\"bool\":"),
-                    "Not running within Filter Context.");
+                    JestDemoUtils.getJsonStringFromQueryBuilder(boolQueryBuilder)
+                            .startsWith("{\"bool\":{\"filter\":[{\"bool\":"), "Not running within Filter Context.");
         } catch (IOException e) {
             e.printStackTrace();
         }
@@ -127,8 +108,7 @@ public class BoolQueryService {
         try {
             return JestDemoUtils
                     .executeSearch(client, params.getIndexes(),
-                            JestDemoUtils.createSearchSourceBuilder(
-                                    boolQueryBuilder, size))
+                            JestDemoUtils.createSearchSourceBuilder(boolQueryBuilder, size))
                     .getJsonObject()
                     .getAsJsonObject("hits")
                     .getAsJsonArray("hits");

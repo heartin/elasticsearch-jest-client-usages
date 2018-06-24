@@ -34,9 +34,7 @@ public class BulkService {
      * use refresh api instead.
      * @throws IOException not handled, not
      */
-    public final void bulkUpload(
-            final List<UploadDocument> documents,
-            final boolean refresh) throws IOException {
+    public final void bulkUpload(final List<UploadDocument> documents, final boolean refresh) throws IOException {
 
         final Bulk.Builder builder = new Bulk.Builder();
 
@@ -55,8 +53,7 @@ public class BulkService {
         BulkResult result = client.execute(bulk);
 
         if (!result.isSucceeded()) {
-            throw new RuntimeException("Bulk request failed:"
-                    + result.getErrorMessage());
+            throw new RuntimeException("Bulk request failed:" + result.getErrorMessage());
         }
     }
 

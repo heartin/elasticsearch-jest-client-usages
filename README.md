@@ -23,12 +23,11 @@ Clone simple-boot-parent-java: <br>
 git clone https://github.com/heartin/simple-boot-parent-java.git <br>
 Run './mvnw clean install' or 'mvn clean install'
 
-
-### Configuring and running elasticsearch-jest-client-usages
-
 Clone this repo (elasticsearch-jest-client-usages): <br>
 git clone https://github.com/heartin/elasticsearch-jest-client-usages.git <br>
 Run './mvnw clean compile' or 'mvn clean compile'
+
+### Configuring and running elasticsearch-jest-client-usages
 
 Project's tests use a Spring profile "test". So configure following properties required 
 by JestAutoConfiguration in a file application-test.properties. This file is added to 
@@ -37,10 +36,13 @@ by JestAutoConfiguration in a file application-test.properties. This file is add
 - spring.elasticsearch.jest.password <br>
 - spring.elasticsearch.jest.uris <br>
 
+Example configuration for docker:
+spring.elasticsearch.jest.username=
+spring.elasticsearch.jest.password=
+spring.elasticsearch.jest.uris=http://localhost:9200
+
 Notes: 
-1. username is your username, password is your password and uris should refer to your endpoint. 
-1. If you are using Amazon Web Services (AWS) as given in the links at references section, you might not be requiring an username / password. 
-1. Please refer to additional references section below for more details on how to setup an account on the Elastic Cloud or Amazon Web Services (AWS).
+1. Please refer to additional references section below for details on how to do setup with Elastic Cloud or AWS ES.
 1. Having passwords in application.properties may result in accidental checkin of passwords. So you may also use any of the other Spring Boot externalized configuration options instead of application.properties. 
 
 Run './mvnw clean install' or 'mvn clean install'

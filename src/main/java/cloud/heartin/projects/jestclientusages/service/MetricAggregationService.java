@@ -10,7 +10,6 @@ import org.elasticsearch.index.query.QueryBuilder;
 import org.elasticsearch.search.aggregations.AggregationBuilder;
 import org.elasticsearch.search.aggregations.AggregationBuilders;
 import org.elasticsearch.search.aggregations.bucket.filter.FilterAggregationBuilder;
-import org.elasticsearch.search.builder.SearchSourceBuilder;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -35,7 +34,7 @@ public class MetricAggregationService {
     }
 
     /**
-     * Match Query.
+     * Count Aggregation.
      * @param indexes - Indexes.
      * @param field - Field to find Average.
      * @return Average.
@@ -48,7 +47,7 @@ public class MetricAggregationService {
                                                    .count(AGG_NAME)
                                                    .field(field);
         final SearchResult result = JestDemoUtils.executeSearch(
-                client, indexes, createSearchSourceBuilder(aggregation));
+                client, indexes, JestDemoUtils.createSearchSourceBuilder(aggregation, 0));
 
         return result.getAggregations()
             .getValueCountAggregation(AGG_NAME)
@@ -56,7 +55,7 @@ public class MetricAggregationService {
     }
 
     /**
-     * Match Query.
+     * Count Aggregation within filter.
      * @param indexes - Indexes.
      * @param field - Field to find Average.
      * @param filter - Query filter.
@@ -72,19 +71,12 @@ public class MetricAggregationService {
                 .subAggregation(subAggregation);
 
         final SearchResult result = JestDemoUtils.executeSearch(
-                client, indexes, createSearchSourceBuilder(aggregation));
+                client, indexes, JestDemoUtils.createSearchSourceBuilder(aggregation, 0));
 
         return result.getAggregations()
                 .getFilterAggregation("Filter")
                 .getValueCountAggregation(AGG_NAME)
                 .getValueCount();
-    }
-
-    private SearchSourceBuilder createSearchSourceBuilder(
-            final AggregationBuilder aggregation) {
-        SearchSourceBuilder searchSourceBuilder = new SearchSourceBuilder();
-        searchSourceBuilder.aggregation(aggregation);
-        return searchSourceBuilder;
     }
 
 }

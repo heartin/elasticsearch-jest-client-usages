@@ -1,0 +1,22 @@
+{
+    "mappings": {
+        "_doc": {
+            "dynamic" : "strict",
+            "properties": {
+                "top_name": {
+                    "type" : "keyword"
+                },
+                "top_value": {
+                    "type" : "integer"
+                },
+                "inner": {
+                    "type": "nested",
+                    "properties": {
+                        "inner_name" : {"type" : "keyword" },
+                        "inner_value" : {"type" : "integer" }
+                    }
+                }
+            }
+        }
+    }
+}

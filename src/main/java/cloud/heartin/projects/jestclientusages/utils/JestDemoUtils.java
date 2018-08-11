@@ -9,6 +9,7 @@ import io.searchbox.core.SearchResult;
 import org.elasticsearch.common.xcontent.ToXContent;
 import org.elasticsearch.common.xcontent.XContentFactory;
 import org.elasticsearch.index.query.QueryBuilder;
+import org.elasticsearch.search.aggregations.AggregationBuilder;
 import org.elasticsearch.search.builder.SearchSourceBuilder;
 
 /**
@@ -71,6 +72,20 @@ public final class JestDemoUtils {
     public static String getJsonStringFromQueryBuilder(final QueryBuilder queryBuilder) throws IOException {
 
         return queryBuilder.toXContent(XContentFactory.jsonBuilder(), ToXContent.EMPTY_PARAMS).prettyPrint().string();
+    }
+
+    /**
+     * Create SearchSourceBuilder.
+     * @param aggregation aggregation builder.
+     * @param size size.
+     * @return SearchSourceBuilder.
+     */
+    public static SearchSourceBuilder createSearchSourceBuilder(
+            final AggregationBuilder aggregation, final int size) {
+        SearchSourceBuilder searchSourceBuilder = new SearchSourceBuilder();
+        searchSourceBuilder.aggregation(aggregation);
+        searchSourceBuilder.size(size);
+        return searchSourceBuilder;
     }
 
 }

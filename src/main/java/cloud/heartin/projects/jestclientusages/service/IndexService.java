@@ -1,6 +1,9 @@
 package cloud.heartin.projects.jestclientusages.service;
 
+import java.io.File;
 import java.io.IOException;
+import java.nio.charset.StandardCharsets;
+import java.nio.file.Files;
 import java.util.List;
 
 import io.searchbox.client.JestClient;
@@ -11,7 +14,7 @@ import io.searchbox.indices.IndicesExists;
 import io.searchbox.indices.Refresh;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-
+import org.springframework.util.ResourceUtils;
 
 /**
  * Index services.
@@ -34,11 +37,47 @@ public class IndexService {
      * @throws IOException not handled, not a great thing.
      */
     public final void createIndex(final String index) throws IOException {
-        JestResult result  = client.execute(new CreateIndex.Builder(index).build());
+        JestResult result  = this.client.execute(new CreateIndex.Builder(index).build());
 
         if (!result.isSucceeded()) {
             throw new RuntimeException("Create Index Request Failed:" + result.getErrorMessage());
         }
+    }
+
+    /**
+     * Create an index with settings.
+     * @param index index.
+     * @param jsonSettings json settings.
+     * @throws IOException not handled, not a great thing.
+     */
+    public final void createIndexFromSettings(final String index, final Object jsonSettings) throws IOException {
+
+        final CreateIndex.Builder createIndexBuilder = new CreateIndex.Builder(index);
+        if (jsonSettings != null) {
+            createIndexBuilder.settings(jsonSettings);
+        }
+
+        final JestResult result = this.client.execute(createIndexBuilder.build());
+
+        if (!result.isSucceeded()) {
+            throw new RuntimeException("Create Index Request Failed:" + result.getErrorMessage());
+        }
+    }
+
+    /**
+     * Create an index with settings from file.
+     * @param index index.
+     * @param path path.
+     * @throws IOException not handled, not a great thing.
+     */
+    public final void createIndexFromPath(final String index, final String path) throws IOException {
+        final String jsonSettings = getContentsFromFile(path);
+        createIndexFromSettings(index, jsonSettings);
+    }
+
+    private String getContentsFromFile(final String path) throws IOException {
+        File file = ResourceUtils.getFile(path);
+        return new String(Files.readAllBytes(file.toPath()), StandardCharsets.UTF_8);
     }
 
     /**
@@ -122,7 +161,7 @@ public class IndexService {
      * @return true if success.
      */
     public final boolean refresh(final List<String> indexes) {
-        JestResult result = null;
+        JestResult result;
         try {
             result  =  client.execute(new Refresh.Builder().addIndices(indexes).build());
         } catch (IOException io) {

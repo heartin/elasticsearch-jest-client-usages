@@ -3,7 +3,7 @@
 	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
 	<modelVersion>4.0.0</modelVersion>
 
-	<groupId>cloud.heartin.projects</groupId>
+	<groupId>tech.heartin.projects</groupId>
 	<artifactId>elasticsearch-jest-client-usages</artifactId>
 	<version>0.0.1-SNAPSHOT</version>
 	<packaging>jar</packaging>
@@ -13,7 +13,7 @@
 
     <!-- TODO: Create an Elasticsearch parent common to all ES clients -->
 	<parent>
-		<groupId>cloud.heartin.projects</groupId>
+		<groupId>tech.heartin.projects</groupId>
 		<artifactId>simple-boot-parent-java</artifactId>
 		<version>0.0.1-SNAPSHOT</version>
 		<relativePath/> <!-- lookup parent from repository -->

@@ -7,8 +7,11 @@ import java.util.Map;
 
 import io.searchbox.client.JestClient;
 import io.searchbox.core.SearchResult;
+
+import org.elasticsearch.index.query.QueryBuilder;
 import org.elasticsearch.search.aggregations.AggregationBuilder;
 import org.elasticsearch.search.aggregations.AggregationBuilders;
+import org.elasticsearch.search.aggregations.bucket.filter.FilterAggregationBuilder;
 import org.elasticsearch.search.builder.SearchSourceBuilder;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -54,6 +57,42 @@ public class BucketAggregationService {
             .forEach(
                 e -> mapKeyToCount.put(e.getKey(), e.getCount())
             );
+
+        return mapKeyToCount;
+    }
+
+    /**
+     * Match Query.
+     * @param indexes - Index.
+     * @param field - Field to find Average.
+     * @param filter - Filter to apply to match query.
+     * @return Average.
+     * @throws IOException not handled, not a great thing.
+     */
+    public final Map<String, Long> termsAggregationBucketCounts(final List<String> indexes, final String field,
+            final QueryBuilder filter)
+            throws IOException {
+
+        final AggregationBuilder subAggregation = AggregationBuilders.terms(TERMS_AGG_NAME).field(field);
+
+        final FilterAggregationBuilder aggregation = AggregationBuilders.filter("Filter", filter)
+                .subAggregation(subAggregation);
+
+        final SearchResult result =
+                JestDemoUtils.executeSearch(
+                        client,
+                        indexes,
+                        createSearchSourceBuilder(aggregation));
+
+        final Map<String, Long> mapKeyToCount = new HashMap<>();
+
+        result.getAggregations()
+                .getFilterAggregation("Filter")
+                .getTermsAggregation(TERMS_AGG_NAME)
+                .getBuckets()
+                .forEach(
+                        e -> mapKeyToCount.put(e.getKey(), e.getCount())
+                );
 
         return mapKeyToCount;
     }

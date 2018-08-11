@@ -6,6 +6,7 @@ import java.util.List;
 
 import com.google.gson.JsonArray;
 import com.google.gson.JsonElement;
+
 import org.elasticsearch.index.query.QueryBuilders;
 import org.junit.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -145,6 +146,23 @@ public class BoolQueryServiceTest extends TestParentWithDataMultiIndex {
         assertThat(extractNames(result), containsInAnyOrder(
                 "Super Man", "Spider Man", "Spider Man"));
         assertEquals(3, result.size());
+    }
+
+    @Test
+    public void testWithFilterQueryAndMatchAll() {
+        final BoolQueryParams params = BoolQueryParams.builder()
+                .indexes(getIndexes())
+                .filterQueries(Arrays.asList(
+                        QueryBuilders.termQuery("age", "30")))
+                .mustQueries(Arrays.asList(
+                        QueryBuilders.matchAllQuery()
+                ))
+                .build();
+
+        JsonArray result = service.boolQuery(params, 10);
+        // multiple filter query works as a 'AND' operation.
+        assertThat(extractNames(result), containsInAnyOrder("Spider Man", "Spider Man"));
+        assertEquals(2, result.size());
     }
 
     private List<String> extractNames(final JsonArray result) {

@@ -10,6 +10,7 @@ import org.elasticsearch.index.query.QueryBuilder;
 import org.elasticsearch.search.aggregations.AggregationBuilder;
 import org.elasticsearch.search.aggregations.AggregationBuilders;
 import org.elasticsearch.search.aggregations.bucket.filter.FilterAggregationBuilder;
+import org.elasticsearch.search.builder.SearchSourceBuilder;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -46,8 +47,14 @@ public class MetricAggregationService {
         final AggregationBuilder aggregation = AggregationBuilders
                                                    .count(AGG_NAME)
                                                    .field(field);
+
+        SearchSourceBuilder searchSourceBuilder = new SearchSourceBuilder();
+        searchSourceBuilder
+                .aggregation(aggregation)
+                .size(0);
+
         final SearchResult result = JestDemoUtils.executeSearch(
-                client, indexes, JestDemoUtils.createSearchSourceBuilder(aggregation, 0));
+                client, indexes, searchSourceBuilder);
 
         return result.getAggregations()
             .getValueCountAggregation(AGG_NAME)
@@ -70,8 +77,13 @@ public class MetricAggregationService {
         final FilterAggregationBuilder aggregation = AggregationBuilders.filter("Filter", filter)
                 .subAggregation(subAggregation);
 
+        SearchSourceBuilder searchSourceBuilder = new SearchSourceBuilder();
+        searchSourceBuilder
+                .aggregation(aggregation)
+                .size(0);
+
         final SearchResult result = JestDemoUtils.executeSearch(
-                client, indexes, JestDemoUtils.createSearchSourceBuilder(aggregation, 0));
+                client, indexes, searchSourceBuilder);
 
         return result.getAggregations()
                 .getFilterAggregation("Filter")

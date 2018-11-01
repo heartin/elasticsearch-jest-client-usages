@@ -32,9 +32,10 @@ public class BulkService {
      * @param documents documents to upload.
      * @param refresh true to reflect changes immediate (no guarantees though),
      * use refresh api instead.
+     * @return Bulk Result
      * @throws IOException not handled, not
      */
-    public final void bulkUpload(final List<UploadDocument> documents, final boolean refresh) throws IOException {
+    public final BulkResult bulkUpload(final List<UploadDocument> documents, final boolean refresh) throws IOException {
 
         final Bulk.Builder builder = new Bulk.Builder();
 
@@ -56,6 +57,8 @@ public class BulkService {
             result.getFailedItems().forEach(i -> System.out.println(i.errorReason));
             throw new RuntimeException("Bulk request failed:" + result.getErrorMessage());
         }
+
+        return result;
     }
 
 }

@@ -80,7 +80,7 @@ public final class JestDemoUtils {
      * @param size size.
      * @return SearchSourceBuilder.
      */
-    public static SearchSourceBuilder createSearchSourceBuilder(
+    public static SearchSourceBuilder createSearchSourceBuilderOld(
             final AggregationBuilder aggregation, final int size) {
         SearchSourceBuilder searchSourceBuilder = new SearchSourceBuilder();
         searchSourceBuilder.aggregation(aggregation);

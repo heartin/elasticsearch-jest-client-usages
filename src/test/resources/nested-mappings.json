@@ -3,17 +3,19 @@
         "_doc": {
             "dynamic" : "strict",
             "properties": {
-                "top_name": {
+                "top1_string": {
                     "type" : "keyword"
                 },
-                "top_value": {
+                "top2_int": {
                     "type" : "integer"
                 },
-                "inner": {
+                "nested1": {
                     "type": "nested",
                     "properties": {
-                        "inner_name" : {"type" : "keyword" },
-                        "inner_value" : {"type" : "integer" }
+                        "name" : {"type" : "keyword" },
+                        "type" : {"type" : "keyword" },
+                        "value_integer" : {"type" : "integer" },
+                        "value_string" : {"type" : "keyword" }
                     }
                 }
             }

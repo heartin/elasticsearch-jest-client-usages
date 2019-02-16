@@ -22,7 +22,7 @@ public class AliasServiceTest extends TestParentWithDataMultiIndex {
 
     public static final Map<String, Object> USER_FILTER_JSON = new MapBuilder<String, Object>()
             .put("term", MapBuilder.newMapBuilder()
-                    .put("company", "avengers") //Small avengers as no analysis
+                    .put("company", "Avengers") //Small avengers as no analysis
                     .immutableMap())
             .immutableMap();
 
@@ -37,6 +37,12 @@ public class AliasServiceTest extends TestParentWithDataMultiIndex {
         aliasService.dropAlias(ALIAS_NAME_1, TestData.EMPLOYEE_INDEX);
         assertFalse(aliasService.checkAlias(ALIAS_NAME_1, TestData.EMPLOYEE_INDEX));
         super.cleanup();
+    }
+
+    @Test
+    public void dropAlias() {
+        aliasService.dropAlias("airwatch_devicesensors", "*");
+        //assertFalse(aliasService.checkAlias(ALIAS_NAME_1, TestData.EMPLOYEE_INDEX));
     }
 
     @Test

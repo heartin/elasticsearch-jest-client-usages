@@ -29,13 +29,13 @@ public class BoolQueryServiceTest extends TestParentWithDataMultiIndex {
         final BoolQueryParams params = BoolQueryParams.builder()
                 .indexes(getIndexes())
                 .filterQueries(Arrays.asList(
-                        QueryBuilders.termQuery("company", "avengers")))
+                        QueryBuilders.termQuery("company", "Avengers")))
                 .mustQueries(Arrays.asList(
                         QueryBuilders.termQuery("age", "45")))
                 .shouldQueries(Arrays.asList(
-                        QueryBuilders.wildcardQuery("name", "*man*")))
+                        QueryBuilders.wildcardQuery("name", "*Man*")))
                 .mustNotQueries(Arrays.asList(
-                        QueryBuilders.wildcardQuery("name", "ant*")))
+                        QueryBuilders.wildcardQuery("name", "Ant*")))
                 .build();
 
         JsonArray result = service.boolQuery(params, 10);
@@ -49,9 +49,9 @@ public class BoolQueryServiceTest extends TestParentWithDataMultiIndex {
         final BoolQueryParams params = BoolQueryParams.builder()
                 .indexes(getIndexes())
                 .shouldQueries(Arrays.asList(
-                        QueryBuilders.wildcardQuery("name", "*man*")))
+                        QueryBuilders.wildcardQuery("name", "*Man*")))
                 .mustNotQueries(Arrays.asList(
-                        QueryBuilders.wildcardQuery("name", "ant*")))
+                        QueryBuilders.wildcardQuery("name", "Ant*")))
                 .build();
 
         JsonArray result = service.boolQuery(params, 10);
@@ -67,13 +67,13 @@ public class BoolQueryServiceTest extends TestParentWithDataMultiIndex {
         final BoolQueryParams params = BoolQueryParams.builder()
                 .indexes(getIndexes())
                 .filterQueries(Arrays.asList(
-                        QueryBuilders.termQuery("company", "avengers")))
+                        QueryBuilders.termQuery("company", "Avengers")))
                 .mustQueries(Arrays.asList(
                         QueryBuilders.termQuery("age", "45")))
                 .shouldQueries(Arrays.asList(
-                        QueryBuilders.wildcardQuery("name", "*man*")))
+                        QueryBuilders.wildcardQuery("name", "*Man*")))
                 .mustNotQueries(Arrays.asList(
-                        QueryBuilders.wildcardQuery("name", "ant*")))
+                        QueryBuilders.wildcardQuery("name", "Ant*")))
                 .build();
 
         JsonArray result = service.boolQueryFilterContext(params, 10);
@@ -103,7 +103,7 @@ public class BoolQueryServiceTest extends TestParentWithDataMultiIndex {
         final BoolQueryParams params = BoolQueryParams.builder()
                 .indexes(getIndexes())
                 .filterQueries(Arrays.asList(
-                        QueryBuilders.wildcardQuery("name", "s*"),
+                        QueryBuilders.wildcardQuery("name", "S*"),
                         QueryBuilders.termQuery("age", "30")))
                 .build();
 
@@ -118,7 +118,7 @@ public class BoolQueryServiceTest extends TestParentWithDataMultiIndex {
         final BoolQueryParams params = BoolQueryParams.builder()
                 .indexes(getIndexes())
                 .mustQueries(Arrays.asList(
-                        QueryBuilders.wildcardQuery("name", "s*"),
+                        QueryBuilders.wildcardQuery("name", "S*"),
                         QueryBuilders.termQuery("age", "30")))
                 .build();
 
@@ -134,7 +134,7 @@ public class BoolQueryServiceTest extends TestParentWithDataMultiIndex {
         final BoolQueryParams params = BoolQueryParams.builder()
                 .indexes(getIndexes())
                 .shouldQueries(Arrays.asList(
-                        QueryBuilders.wildcardQuery("name", "s*"),
+                        QueryBuilders.wildcardQuery("name", "S*"),
                         QueryBuilders.termQuery("age", "30")))
                 .build();
 

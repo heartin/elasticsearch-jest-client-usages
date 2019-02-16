@@ -1,0 +1,18 @@
+{
+    "mappings": {
+        "_doc": {
+            "dynamic" : "strict",
+            "properties": {
+                "name": {
+                    "type" : "keyword"
+                },
+                "age": {
+                    "type" : "integer"
+                },
+                "company": {
+                    "type" : "keyword"
+                }
+            }
+        }
+    }
+}

@@ -24,7 +24,7 @@ public class MetricAggregationServiceTest extends TestParentWithDataMultiIndex {
     @Test
     public void countAggregationTestWithFilter() throws IOException {
         double result = service.countAggregation(getIndexes(), "_id",
-                QueryBuilders.termQuery("company", "avengers"));
+                QueryBuilders.termQuery("company", "Avengers"));
         assertEquals(5, result, 0);
     }
 

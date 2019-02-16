@@ -67,7 +67,7 @@ public class UpdateService {
                         .append("\": [");
                 prepareJsonForNestedAttribute((List<Map<String, String>>) val, sb);
                 sb.append("],");
-                return; // skip the _id
+                return;
             }
 
             if (StringUtils.equals(attr, "_id") || val == null) {

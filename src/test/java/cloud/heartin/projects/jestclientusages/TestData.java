@@ -27,24 +27,82 @@ public final class TestData {
         source.put("name", "Iron Man");
         source.put("age", 45);
         source.put("company", "Avengers");
+
+        List<Map<String, Object>> customPropertyList = new ArrayList<>();
+        Map<String, Object> customProperty = new HashMap<>();
+        customProperty.put("name", "first_movie");
+        customProperty.put("type", "keyword");
+        customProperty.put("value_keyword", "Iron Man");
+        customPropertyList.add(customProperty);
+
+        customProperty = new HashMap<>();
+        customProperty.put("name", "second_movie");
+        customProperty.put("type", "keyword");
+        customProperty.put("value_keyword", "Avengers");
+        customPropertyList.add(customProperty);
+
+        source.put("_emp_custom", customPropertyList);
         documents.add(UploadDocument.builder().id("1").index(employeeIndex).source(source).build());
 
+        // Super man
         source = new HashMap<>();
         source.put("name", "Super Man");
         source.put("age", 45);
         source.put("company", "Justice League");
+
+        customPropertyList = new ArrayList<>();
+        customProperty = new HashMap<>();
+        customProperty.put("name", "first_movie");
+        customProperty.put("type", "keyword");
+        customProperty.put("value_keyword", "Super Man");
+
+        customPropertyList.add(customProperty);
+        source.put("_emp_custom", customPropertyList);
         documents.add(UploadDocument.builder().id("2").index(employeeIndex).source(source).build());
 
+
+        // Hulk
         source = new HashMap<>();
         source.put("name", "Hulk");
         source.put("age", 45);
         source.put("company", "Avengers");
+
+        customPropertyList = new ArrayList<>();
+        customProperty = new HashMap<>();
+        customProperty.put("name", "first_movie");
+        customProperty.put("type", "keyword");
+        customProperty.put("value_keyword", "Hulk");
+        customPropertyList.add(customProperty);
+
+        customProperty = new HashMap<>();
+        customProperty.put("name", "second_movie");
+        customProperty.put("type", "keyword");
+        customProperty.put("value_keyword", "Avengers");
+        customPropertyList.add(customProperty);
+
+        source.put("_emp_custom", customPropertyList);
         documents.add(UploadDocument.builder().id("3").index(employeeIndex).source(source).build());
 
+        // Spider man
         source = new HashMap<>();
         source.put("name", "Spider Man");
         source.put("age", 30);
         source.put("company", "Avengers");
+
+        customPropertyList = new ArrayList<>();
+        customProperty = new HashMap<>();
+        customProperty.put("name", "first_movie");
+        customProperty.put("type", "keyword");
+        customProperty.put("value_keyword", "Spider Man");
+        customPropertyList.add(customProperty);
+
+        customProperty = new HashMap<>();
+        customProperty.put("name", "second_movie");
+        customProperty.put("type", "keyword");
+        customProperty.put("value_keyword", "Avengers");
+        customPropertyList.add(customProperty);
+
+        source.put("_emp_custom", customPropertyList);
         documents.add(UploadDocument.builder().id("4").index(employeeIndex).source(source).build());
 
         return documents;

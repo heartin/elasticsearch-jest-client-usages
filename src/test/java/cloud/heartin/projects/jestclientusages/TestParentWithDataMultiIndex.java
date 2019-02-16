@@ -25,8 +25,16 @@ public class TestParentWithDataMultiIndex extends TestParent {
     @Autowired
     private IndexService indexService;
 
+    private static final String MAPPINGS_EMPLOYEE = "employee-nested-mappings.json";
+    private static final String MAPPINGS_STUDENT = "student-nested-mappings.json";
+
+
     @Before
     public void createIndexes() throws IOException {
+
+        indexService.createIndexFromPath(TestData.EMPLOYEE_INDEX, "classpath:" + MAPPINGS_EMPLOYEE);
+        indexService.createIndexFromPath(TestData.STUDENT_INDEX, "classpath:" + MAPPINGS_STUDENT);
+
         indexes = new LinkedList<>();
         indexes.add(TestData.EMPLOYEE_INDEX);
         indexes.add(TestData.STUDENT_INDEX);

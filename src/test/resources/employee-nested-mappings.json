@@ -1,0 +1,27 @@
+{
+    "mappings": {
+        "_doc": {
+            "dynamic" : "strict",
+            "properties": {
+                "name": {
+                    "type" : "keyword"
+                },
+                "age": {
+                    "type" : "integer"
+                },
+                "company": {
+                    "type" : "keyword"
+                },
+                "_emp_custom": {
+                    "type": "nested",
+                    "properties": {
+                        "name" : {"type" : "keyword" },
+                        "type" : {"type" : "keyword" },
+                        "value_integer" : {"type" : "integer" },
+                        "value_keyword" : {"type" : "keyword" }
+                    }
+                }
+            }
+        }
+    }
+}

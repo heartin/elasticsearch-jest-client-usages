@@ -173,6 +173,8 @@ public class NestedQueryServiceTest extends NestedTestParent {
         log.info("! Time for nestedMatchQueryTest = " + (after - before));
 
         assertEquals(4, result.get("1").size(), 0);
+
+        System.out.println(result);
     }
 
     @Test

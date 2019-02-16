@@ -12,11 +12,14 @@ import org.elasticsearch.index.query.QueryBuilder;
 import org.elasticsearch.search.aggregations.AggregationBuilder;
 import org.elasticsearch.search.aggregations.AggregationBuilders;
 import org.elasticsearch.search.aggregations.bucket.filter.FilterAggregationBuilder;
+import org.elasticsearch.search.aggregations.bucket.nested.NestedAggregationBuilder;
 import org.elasticsearch.search.builder.SearchSourceBuilder;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import cloud.heartin.projects.jestclientusages.utils.JestDemoUtils;
+
+import com.google.gson.JsonArray;
 
 /**
  * Multi Index Bucket Aggregation Service.
@@ -55,8 +58,49 @@ public class BucketAggregationService {
             .getTermsAggregation(TERMS_AGG_NAME)
             .getBuckets()
             .forEach(
-                e -> mapKeyToCount.put(e.getKey(), e.getCount())
+                e -> {
+                    mapKeyToCount.put(e.getKey(), e.getCount());
+                    System.out.println(e);
+                }
             );
+
+        return mapKeyToCount;
+    }
+
+    /**
+     * Nested Match Query.
+     * @param indexes - Index.
+     * @param field - Field to find Average.
+     * @return Average.
+     * @throws IOException not handled, not a great thing.
+     */
+    public final Map<String, Long> nestedTermsAggregationBucketCounts(final List<String> indexes, final String field)
+            throws IOException {
+        final AggregationBuilder subAggregation = AggregationBuilders.terms(TERMS_AGG_NAME).field(field).size(10);
+
+
+        final NestedAggregationBuilder aggregation = AggregationBuilders.nested("NESTED", "_emp_custom")
+                .subAggregation(subAggregation);
+
+
+        final SearchResult result =
+                JestDemoUtils.executeSearch(
+                        client,
+                        indexes,
+                        createSearchSourceBuilder(aggregation));
+
+        final Map<String, Long> mapKeyToCount = new HashMap<>();
+
+        JsonArray jsonArray = result.getJsonObject()
+                .getAsJsonObject("aggregations")
+                .getAsJsonObject("NESTED")
+                .getAsJsonObject(TERMS_AGG_NAME)
+                .getAsJsonArray("buckets");
+
+        jsonArray.forEach(e ->  mapKeyToCount.put(e.getAsJsonObject().get("key").getAsString(),
+                e.getAsJsonObject().get("doc_count").getAsLong()));
+
+        System.out.println(jsonArray);
 
         return mapKeyToCount;
     }

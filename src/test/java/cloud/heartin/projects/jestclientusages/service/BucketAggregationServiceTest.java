@@ -3,6 +3,7 @@ package cloud.heartin.projects.jestclientusages.service;
 import java.io.IOException;
 import java.util.Map;
 
+import org.elasticsearch.index.query.BoolQueryBuilder;
 import org.elasticsearch.index.query.QueryBuilders;
 import org.junit.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -38,6 +39,18 @@ public class BucketAggregationServiceTest extends TestParentWithDataMultiIndex {
                 service.termsAggregationBucketCounts(getIndexes(), "age",
                         QueryBuilders.termQuery("company", "Avengers"));
         assertEquals(3, (long) map.get("45"));
+    }
+
+    @Test
+    public final void nestedAggregationTestWithFilter() throws IOException {
+        BoolQueryBuilder boolQueryBuilder = QueryBuilders.boolQuery();
+        boolQueryBuilder.filter(QueryBuilders.termQuery("_emp_custom.name", "first_movie"));
+        boolQueryBuilder.filter(QueryBuilders.prefixQuery("_emp_custom.value_keyword", "S"));
+
+        Map<String, Long> map =
+                service.nestedTermsAggregationBucketCounts(getIndexes(), "_emp_custom.name",
+                        boolQueryBuilder);
+        assertEquals(2, (long) map.get("first_movie"));
     }
 
 }

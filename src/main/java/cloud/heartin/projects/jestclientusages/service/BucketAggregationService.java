@@ -78,10 +78,8 @@ public class BucketAggregationService {
             throws IOException {
         final AggregationBuilder subAggregation = AggregationBuilders.terms(TERMS_AGG_NAME).field(field).size(10);
 
-
         final NestedAggregationBuilder aggregation = AggregationBuilders.nested("NESTED", "_emp_custom")
                 .subAggregation(subAggregation);
-
 
         final SearchResult result =
                 JestDemoUtils.executeSearch(
@@ -99,8 +97,6 @@ public class BucketAggregationService {
 
         jsonArray.forEach(e ->  mapKeyToCount.put(e.getAsJsonObject().get("key").getAsString(),
                 e.getAsJsonObject().get("doc_count").getAsLong()));
-
-        System.out.println(jsonArray);
 
         return mapKeyToCount;
     }
@@ -137,6 +133,48 @@ public class BucketAggregationService {
                 .forEach(
                         e -> mapKeyToCount.put(e.getKey(), e.getCount())
                 );
+
+        return mapKeyToCount;
+    }
+
+    /**
+     * Nested Prefix Query.
+     * @param indexes - Index.
+     * @param field - Field to find Average.
+     * @param filter - Filter to apply to match query.
+     * @return Average.
+     * @throws IOException not handled, not a great thing.
+     */
+    public final Map<String, Long> nestedTermsAggregationBucketCounts(final List<String> indexes, final String field,
+            final QueryBuilder filter)
+            throws IOException {
+
+        final AggregationBuilder subAggregation = AggregationBuilders.terms(TERMS_AGG_NAME).field(field);
+
+        final FilterAggregationBuilder filterAggregation = AggregationBuilders.filter("Filter", filter)
+                .subAggregation(subAggregation);
+
+        final NestedAggregationBuilder aggregation = AggregationBuilders.nested("NESTED", "_emp_custom")
+                .subAggregation(filterAggregation);
+
+        final SearchResult result =
+                JestDemoUtils.executeSearch(
+                        client,
+                        indexes,
+                        createSearchSourceBuilder(aggregation));
+
+        final Map<String, Long> mapKeyToCount = new HashMap<>();
+
+        JsonArray jsonArray = result.getJsonObject()
+                .getAsJsonObject("aggregations")
+                .getAsJsonObject("NESTED")
+                .getAsJsonObject("Filter")
+                .getAsJsonObject(TERMS_AGG_NAME)
+                .getAsJsonArray("buckets");
+
+        jsonArray.forEach(e ->  mapKeyToCount.put(e.getAsJsonObject().get("key").getAsString(),
+                e.getAsJsonObject().get("doc_count").getAsLong()));
+
 
         return mapKeyToCount;
     }

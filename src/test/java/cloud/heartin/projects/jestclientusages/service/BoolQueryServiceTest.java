@@ -140,8 +140,6 @@ public class BoolQueryServiceTest extends TestParentWithDataMultiIndex {
 
         JsonArray result = service.boolQuery(params, 10);
 
-        System.out.println(extractNames(result));
-
         // multiple should query works as a 'OR' operation.
         assertThat(extractNames(result), containsInAnyOrder(
                 "Super Man", "Spider Man", "Spider Man"));

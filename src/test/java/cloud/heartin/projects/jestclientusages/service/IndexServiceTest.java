@@ -25,9 +25,9 @@ public class IndexServiceTest extends TestParent {
     @Test
     public void deleteIndexTest() throws IOException {
         // Create an Index for testing delete.
-        service.createIndexSilently("airwatch_devicesensors");
+        service.createIndexSilently(INDEX);
 
-        service.deleteIndex("airwatch_devicesensors");
+        service.deleteIndex(INDEX);
         assertFalse(service.checkIndex(INDEX));
     }
 

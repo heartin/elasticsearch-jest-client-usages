@@ -54,7 +54,6 @@ public class BulkService {
         BulkResult result = client.execute(bulk);
 
         if (!result.isSucceeded()) {
-            result.getFailedItems().forEach(i -> System.out.println(i.errorReason));
             throw new RuntimeException("Bulk request failed:" + result.getErrorMessage());
         }
 

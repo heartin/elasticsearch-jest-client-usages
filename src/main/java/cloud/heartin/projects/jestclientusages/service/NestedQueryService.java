@@ -10,10 +10,13 @@ import io.searchbox.core.SearchResult;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
+import java.util.Set;
 
 import org.apache.lucene.search.join.ScoreMode;
+import org.elasticsearch.index.query.BoolQueryBuilder;
 import org.elasticsearch.index.query.QueryBuilder;
 import org.elasticsearch.index.query.QueryBuilders;
 import org.elasticsearch.search.aggregations.AggregationBuilder;
@@ -117,8 +120,6 @@ public class NestedQueryService {
 
             // This object contains all the document fields as name/value pairs.
             final JsonObject sourceObj = docObj.getAsJsonObject("_source");
-
-            System.out.println("SOURCE=" + sourceObj);
 
             final Map<String, Object> fields = new HashMap<>();
             sourceObj.entrySet().stream()
@@ -286,12 +287,67 @@ public class NestedQueryService {
         final SearchResult result = JestDemoUtils.executeSearch(
                 client, indexes, searchSourceBuilder);
 
-        System.out.println(result.getJsonObject());
         return result.getJsonObject()
                 .getAsJsonObject("aggregations")
                 .getAsJsonObject("NESTED")
                 .getAsJsonObject(AGG_NAME)
                 .get("value")
                 .getAsLong();
+    }
+
+    /**
+     * Nested prefix query.
+     * @param indexes - indexes.
+     * @param path - path.
+     * @param scoreMode - score mode.
+     * @param prefixField - prefix field.
+     * @param prefix - prefix.
+     * @param size - size.
+     * @return List of prefix matches.
+     * @throws IOException not handled, not a great thing.
+     */
+    public final List<String> nestedPrefixQuery(
+            final List<String> indexes,
+            final String path,
+            final ScoreMode scoreMode,
+            final String prefixField,
+            final String prefix,
+            final int size) throws IOException {
+
+        final BoolQueryBuilder boolQueryBuilder = QueryBuilders.boolQuery();
+        boolQueryBuilder.filter(QueryBuilders.termQuery(path + ".name", prefixField));
+        if (prefix != null) {
+            boolQueryBuilder.filter(QueryBuilders.prefixQuery(path + ".value_string", prefix));
+        }
+
+        final QueryBuilder query = QueryBuilders
+                .nestedQuery(path,
+                        boolQueryBuilder,
+                        scoreMode);
+
+        final Set<String> suggestionSet = new HashSet<>();
+
+        JestDemoUtils
+                .executeSearch(client, indexes,
+                        JestDemoUtils.createSearchSourceBuilder(query, size))
+                .getJsonObject()
+                .getAsJsonObject("hits")
+                .getAsJsonArray("hits")
+                .forEach(a -> a.getAsJsonObject()
+                        .getAsJsonObject("_source")
+                        .getAsJsonArray(path)
+                        .forEach(
+                                n -> {
+                                    if (n.getAsJsonObject()
+                                            .getAsJsonPrimitive("name")
+                                            .getAsString().equalsIgnoreCase(prefixField)) {
+                                        suggestionSet.add(n.getAsJsonObject()
+                                                .getAsJsonPrimitive("value_string").getAsString());
+                                    }
+                                }
+                        ));
+
+        return new ArrayList<>(suggestionSet);
+
     }
 }

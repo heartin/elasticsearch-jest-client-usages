@@ -8,7 +8,9 @@ import java.util.Map;
 import io.searchbox.client.JestClient;
 import io.searchbox.core.SearchResult;
 
+import org.elasticsearch.index.query.BoolQueryBuilder;
 import org.elasticsearch.index.query.QueryBuilder;
+import org.elasticsearch.index.query.QueryBuilders;
 import org.elasticsearch.search.aggregations.AggregationBuilder;
 import org.elasticsearch.search.aggregations.AggregationBuilders;
 import org.elasticsearch.search.aggregations.bucket.filter.FilterAggregationBuilder;
@@ -60,7 +62,6 @@ public class BucketAggregationService {
             .forEach(
                 e -> {
                     mapKeyToCount.put(e.getKey(), e.getCount());
-                    System.out.println(e);
                 }
             );
 
@@ -177,6 +178,55 @@ public class BucketAggregationService {
 
 
         return mapKeyToCount;
+    }
+
+    /**
+     * Nested Prefix Query.
+     * @param indexes - Index.
+     * @param prefixField - prefix field
+     * @param prefix - prefix
+     * @param size - size
+     * @return Average.
+     * @throws IOException not handled, not a great thing.
+     */
+    public final  List<String> nestedPrefixSearch(final List<String> indexes, final String prefixField,
+            final String prefix, final int size)
+            throws IOException {
+
+        final BoolQueryBuilder boolQueryBuilder = QueryBuilders.boolQuery();
+        boolQueryBuilder.filter(QueryBuilders.termQuery("_emp_custom.name", prefixField));
+        boolQueryBuilder.filter(QueryBuilders.prefixQuery("_emp_custom.value_keyword", prefix));
+
+        final AggregationBuilder subAggregation = AggregationBuilders.terms(TERMS_AGG_NAME)
+                .field("_emp_custom.name")
+                .size(size);
+
+        final FilterAggregationBuilder filterAggregation = AggregationBuilders.filter("Filter", boolQueryBuilder)
+                .subAggregation(subAggregation);
+
+        final NestedAggregationBuilder aggregation = AggregationBuilders.nested("NESTED", "_emp_custom")
+                .subAggregation(filterAggregation);
+
+        final SearchResult result =
+                JestDemoUtils.executeSearch(
+                        client,
+                        indexes,
+                        createSearchSourceBuilder(aggregation));
+
+        final Map<String, Long> mapKeyToCount = new HashMap<>();
+
+        JsonArray jsonArray = result.getJsonObject()
+                .getAsJsonObject("aggregations")
+                .getAsJsonObject("NESTED")
+                .getAsJsonObject("Filter")
+                .getAsJsonObject(TERMS_AGG_NAME)
+                .getAsJsonArray("buckets");
+
+        jsonArray.forEach(e ->  mapKeyToCount.put(e.getAsJsonObject().get("key").getAsString(),
+                e.getAsJsonObject().get("doc_count").getAsLong()));
+
+
+        return null;
     }
 
     private SearchSourceBuilder createSearchSourceBuilder(final AggregationBuilder aggregation) {

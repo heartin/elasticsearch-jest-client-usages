@@ -48,7 +48,6 @@ public class NestedQueryServiceTest extends NestedTestParent {
         final long after = System.currentTimeMillis();
         log.info("! Time for nestedMatchQueryTest = " + (after - before));
         assertEquals(10, result.size());
-        System.out.println(result);
     }
 
     @Test
@@ -173,8 +172,6 @@ public class NestedQueryServiceTest extends NestedTestParent {
         log.info("! Time for nestedMatchQueryTest = " + (after - before));
 
         assertEquals(4, result.get("1").size(), 0);
-
-        System.out.println(result);
     }
 
     @Test
@@ -261,4 +258,20 @@ public class NestedQueryServiceTest extends NestedTestParent {
         final Map<String, Object> documentMap2  = result.get("1");
         assertEquals(4, documentMap2.size(), 0);
     }
+
+    @Test
+    public void nestedPrefixQueryTest() throws IOException {
+        ScoreMode scoreMode = ScoreMode.None;
+        List<String> result = nestedService.nestedPrefixQuery(
+                Arrays.asList(INDEX),
+                "nested1",
+                scoreMode,
+                "nested_org1_2",
+                "v",
+                SIZE_TOP_DOCS);
+
+        assertEquals(1, result.size());
+        assertEquals("val2", result.get(0));
+    }
+
 }

@@ -86,7 +86,6 @@ public class SearchService {
                         QueryBuilders.matchQuery(key, value),
                         scoreMode);
                 //.query();
-        System.out.println(query);
         return JestDemoUtils
                 .executeSearch(client, indexes,
                         JestDemoUtils.createSearchSourceBuilder(query, size))

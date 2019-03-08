@@ -40,7 +40,6 @@ public class UpdateService {
             final Map<String, String> attributeTypeMap, final String path) throws IOException {
 
         final String json = prepareJsonForUpdate(documentMap, attributeTypeMap, path);
-        System.out.println("JSON=" + json);
         final Update request = new Update.Builder(json).index(index).type("_doc").id(id).build();
         final DocumentResult result = this.client.execute(request);
 

@@ -41,7 +41,7 @@ public class AliasServiceTest extends TestParentWithDataMultiIndex {
 
     @Test
     public void dropAlias() {
-        aliasService.dropAlias("airwatch_devicesensors", "*");
+        aliasService.dropAlias(ALIAS_NAME_1, "*");
         //assertFalse(aliasService.checkAlias(ALIAS_NAME_1, TestData.EMPLOYEE_INDEX));
     }
 

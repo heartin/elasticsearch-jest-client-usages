@@ -1,6 +1,7 @@
 package cloud.heartin.projects.jestclientusages.service;
 
 import java.io.IOException;
+import java.util.Arrays;
 import java.util.LinkedList;
 import java.util.List;
 
@@ -31,6 +32,7 @@ public class SearchServiceTest extends TestParentWithDataMultiIndex {
     @Test
     public void matchQueryTest() throws IOException {
         JsonArray result = service.matchQuery(getIndexes(), "age", "45", 10);
+        System.out.println(result);
         assertEquals(4, result.size());
     }
 
@@ -66,6 +68,24 @@ public class SearchServiceTest extends TestParentWithDataMultiIndex {
 
         response.forEach(r -> assertEquals((long) r.searchResult.getTotal(), 1));
 
+    }
+
+    @Test
+    public void matchQueryWithFieldFilteringTest() throws IOException {
+        JsonArray result = service.matchQueryWithFieldFiltering(getIndexes(), "age", "45", 10, Arrays.asList("name", "age"));
+
+        result.forEach(r -> System.out.println(r.getAsJsonObject()));
+        assertEquals("Super Man", result.get(0).getAsJsonObject().get("_source").getAsJsonObject().get("name").getAsString());
+        assertEquals(4, result.size());
+    }
+
+    @Test
+    public void matchQueryWithFieldFilteringTestWithNestedFields() throws IOException {
+        JsonArray result = service.matchQueryWithFieldFiltering(getIndexes(), "age", "45", 10, Arrays.asList("_emp_custom", "name", "age"));
+        assertEquals("Super Man", result.get(0).getAsJsonObject()
+                .get("_source").getAsJsonObject().get("_emp_custom")
+                .getAsJsonArray().get(0).getAsJsonObject().get("value_keyword").getAsString());
+        assertEquals(4, result.size());
     }
 
 }

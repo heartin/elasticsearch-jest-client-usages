@@ -64,6 +64,23 @@ public final class JestDemoUtils {
     }
 
     /**
+     * Create SearchSourceBuilder from QueryBuilder.
+     * @param query {@link QueryBuilder}.
+     * @param size to limit response items.
+     * @param fieldsToReturn fields to return.
+     * @return {@link SearchSourceBuilder}
+     */
+    public static SearchSourceBuilder createSearchSourceBuilder(final QueryBuilder query,
+            final int size, final List<String> fieldsToReturn) {
+
+        SearchSourceBuilder searchSourceBuilder = new SearchSourceBuilder();
+        searchSourceBuilder.query(query).size(size).fetchSource(
+                fieldsToReturn.toArray(new String[fieldsToReturn.size()]), null);
+
+        return searchSourceBuilder;
+    }
+
+    /**
      * Get JsonString from QueryBuilder.
      * @param queryBuilder {@link QueryBuilder}.
      * @return JsonString

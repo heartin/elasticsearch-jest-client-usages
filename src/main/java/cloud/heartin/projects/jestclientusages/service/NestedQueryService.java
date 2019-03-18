@@ -350,4 +350,30 @@ public class NestedQueryService {
         return new ArrayList<>(suggestionSet);
 
     }
+
+    /**
+     * Match Query.
+     * @param indexes - Index
+     * @param key - Key
+     * @param value - Value
+     * @param size - size (default is 10)
+     * @param fieldsToReturn - fields to return
+     * @return JsonObject with result.
+     * @throws IOException not handled, not a great thing.
+     */
+    public final JsonArray matchQueryWithNestedFieldFiltering(
+            final List<String> indexes,
+            final String key,
+            final String value,
+            final int size,
+            final List<String> fieldsToReturn) throws IOException {
+        final QueryBuilder query = QueryBuilders.matchQuery(key, value);
+        return JestDemoUtils
+                .executeSearch(client, indexes,
+                        JestDemoUtils.createSearchSourceBuilder(query, size, fieldsToReturn))
+                .getJsonObject()
+                .getAsJsonObject("hits")
+                .getAsJsonArray("hits");
+
+    }
 }

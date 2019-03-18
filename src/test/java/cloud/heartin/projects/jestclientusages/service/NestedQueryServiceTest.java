@@ -274,4 +274,16 @@ public class NestedQueryServiceTest extends NestedTestParent {
         assertEquals("val2", result.get(0));
     }
 
+    @Test
+    public void matchQueryWithFieldFilteringTestWithNestedFields() throws IOException {
+        JsonArray result = nestedService.matchQueryWithNestedFieldFiltering(
+                Arrays.asList(INDEX), "top1_string", "reg1", 10, Arrays.asList("top1_string", "nested1"));
+
+        System.out.println(result);
+        //assertEquals("Super Man", result.get(0).getAsJsonObject()
+                //.get("_source").getAsJsonObject().get("_emp_custom")
+                //.getAsJsonArray().get(0).getAsJsonObject().get("value_keyword").getAsString());
+        assertEquals(1, result.size());
+    }
+
 }
